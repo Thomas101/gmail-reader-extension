@@ -1,6 +1,6 @@
 {
   "name": "Feed count for Gmail and Reader",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Your Google Reader unread count in Gmail",
   "content_scripts": [
     {

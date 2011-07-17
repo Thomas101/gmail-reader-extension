@@ -105,7 +105,7 @@ var Reader = function() {
 	* Renders the button and styling in the text
 	*/
 	self.renderButton = function() {
-		if (self.unreadCount === 0) {
+		if (self.unreadCount === 0 || self.unreadCount === undefined) {
 			self.readerButton.text("Reader");
 			self.readerButton.css("font-weight", "normal");
 		} else {
