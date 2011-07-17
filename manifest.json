@@ -1,5 +1,5 @@
 {
-  "name": "Gmail Reader Extension",
+  "name": "Feed count for Gmail and Reader",
   "version": "1.0",
   "description": "Your Google Reader unread count in Gmail",
   "content_scripts": [
