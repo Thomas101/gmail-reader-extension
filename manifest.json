@@ -14,5 +14,8 @@
     "https://mail.google.com/",
     "http://www.google.com/reader/api/0/unread-count",
     "tabs"
-  ]
+  ],
+  "icons":{
+  	"128":"icon.png"
+  	}
 }
