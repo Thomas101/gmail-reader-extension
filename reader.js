@@ -13,7 +13,6 @@
 //   limitations under the License.
 
 const refreshMillis = 60000;//1 min
-
 var Reader = function() {
 	var self = this;
 	self.doc = undefined;
@@ -70,7 +69,7 @@ var Reader = function() {
 			var unreadCounts = res.getElementsByName("unreadcounts")[0];
 			var listNodes = unreadCounts.childNodes;
 			var done = false;
-			var unread = undefined;
+			var unread = 0;
 			
 			// Iterate through <object> nodes
 			for (var i = 0; i < listNodes.length && !done; i++) {

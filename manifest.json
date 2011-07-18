@@ -1,10 +1,10 @@
 {
   "name": "Feed count for Gmail and Reader",
-  "version": "1.1",
+  "version": "1.2",
   "description": "Your Google Reader unread count in Gmail",
   "content_scripts": [
     {
-      "matches": ["https://mail.google.com/mail/ca/"],
+      "matches": ["https://mail.google.com/mail/*"],
       "js": ["jquery.js", "reader.js"],
       "all_frames": true,
       "run_at": "document_idle"
