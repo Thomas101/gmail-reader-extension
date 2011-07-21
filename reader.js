@@ -12,7 +12,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-const refreshMillis = 60000;//1 min
+const refreshMillis = 30000;//30 secs min
 var Reader = function() {
 	var self = this;
 	self.doc = undefined;
@@ -65,39 +65,44 @@ var Reader = function() {
 	* Fires off a http call to get the unread count from reader then updates the UI
 	*/
 	self.updateCount = function() {
-		$.get("http://www.google.com/reader/api/0/unread-count?all=true", function(res) {
-			var unreadCounts = res.getElementsByName("unreadcounts")[0];
-			var listNodes = unreadCounts.childNodes;
-			var done = false;
-			var unread = 0;
-			
-			// Iterate through <object> nodes
-			for (var i = 0; i < listNodes.length && !done; i++) {
-				var propertyNodes = listNodes[i].childNodes;
-				
-				// Iterate over <object> parents. We will need to find the user count
-				for (var j = 0; j < propertyNodes.length && !done; j++) {
-					if(propertyNodes[j].getAttribute("name") === "id") {
-						if (propertyNodes[j].textContent.indexOf("user/") === 0) {
-							// We have found the right note. Lets ge the count
-							for (var k = 0; k < propertyNodes.length && !done; k++) {
-								if(propertyNodes[k].getAttribute("name") === "count") {
-									unread = parseInt(propertyNodes[k].textContent);
-								}
-							}
-						}
-					}
-				}
-			}
-			
-			
-			// Okay the unread count has been retrieved
-			self.unreadCount = unread;
-			self.renderButton();
-			setTimeout(function() {
-				self.updateCount();
-			}, refreshMillis);
-		});
+	    $.ajax({
+          url       : "http://www.google.com/reader/api/0/unread-count?all=true",
+          complete  : function() {
+              setTimeout(function() {
+    				self.updateCount();
+    			}, refreshMillis);
+          },
+          success   : function(res) {
+  			    var unreadCounts = res.getElementsByName("unreadcounts")[0];
+      			var listNodes = unreadCounts.childNodes;
+      			var done = false;
+      			var unread = 0;
+
+      			// Iterate through <object> nodes
+      			for (var i = 0; i < listNodes.length && !done; i++) {
+      				var propertyNodes = listNodes[i].childNodes;
+
+      				// Iterate over <object> parents. We will need to find the user count
+      				for (var j = 0; j < propertyNodes.length && !done; j++) {
+      					if(propertyNodes[j].getAttribute("name") === "id") {
+      						if (propertyNodes[j].textContent.indexOf("user/") === 0) {
+      							// We have found the right note. Lets ge the count
+      							for (var k = 0; k < propertyNodes.length && !done; k++) {
+      								if(propertyNodes[k].getAttribute("name") === "count") {
+      									unread = parseInt(propertyNodes[k].textContent);
+      								}
+      							}
+      						}
+      					}
+      				}
+      			}
+
+
+      			// Okay the unread count has been retrieved
+      			self.unreadCount = unread;
+      			self.renderButton();
+      		}
+        });
 	};
 	
 	/**
