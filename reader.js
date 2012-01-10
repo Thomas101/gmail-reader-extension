@@ -25,34 +25,54 @@ var Reader = function() {
 	self.inject = function() {
 		var frameElem = document.getElementById("canvas_frame");
 		var frameDoc = null;
+		var menuBlock = null;
+		var inboxItem = null;
 		var menu = null;
 		
 		// Some elements may not be loaded so we have to do this lossy loading and retry
 		if (frameElem) {
 			frameDoc = frameElem.contentDocument;
 			if (frameDoc) {
-				menu = frameDoc.getElementsByClassName("T4 pp")[0];
-				if (menu) {
-					menu = $(menu);
-					self.readerButton = $("<a>").attr({
-						"id"		: "reader-tab",
-						"class"		: "T3",
-						"tabindex"	: "1",
-						"role"		: "link",
-						"href"		: "http://reader.google.com",
-						"target"	: "_blank",
-						"style"		: "text-decoration:none; display:block;"
-					}).hover(
-						function() {
-							self.readerButton.addClass("T1");
-						}, function() {
-							self.readerButton.removeClass("T1");
-						}
-					);
-					menu.append(self.readerButton);
-					self.renderButton();
-					self.updateCount();
-					return;
+				menuBlock = frameDoc.getElementById(":n5");
+				if (menuBlock) {
+					inboxItem = menuBlock.getElementsByClassName("aim ain")[0];
+					if (inboxItem) {
+						var elems = $('<div class="aim"><div class="TO" id="gmail-reader-extension-highlightable"><div style="margin-left:0px" class="TN GLujEb"><div class="aio UKr6le"><span class="nU "><a class="J-Ke n0" target="_blank" href="http://reader.google.com" title="Reader" id="gmail-reader-extension-link">Reader</a></span></div><div class="nL aif"></div></div></div></div>');
+						elems.insertAfter($(inboxItem));
+						self.readerButton = $(frameDoc.getElementById('gmail-reader-extension-link'));
+						$(frameDoc.getElementById('gmail-reader-extension-highlightable')).hover(
+							function () {
+								$(frameDoc.getElementById('gmail-reader-extension-highlightable')).addClass("NQ");
+							}, function () {
+								$(frameDoc.getElementById('gmail-reader-extension-highlightable')).removeClass("NQ");
+							}
+						);
+						self.readerButton.click(function() {
+							window.open(self.readerButton.attr("href"), self.readerButton.attr("target"));
+						});
+							
+							
+							
+		/*					self.readerButton = $("<a>").attr({
+								"id"		: "reader-tab",
+								"class"		: "T3",
+								"tabindex"	: "1",
+								"role"		: "link",
+								"href"		: "http://reader.google.com",
+								"target"	: "_blank",
+								"style"		: "text-decoration:none; display:block;"
+							}).hover(
+								function() {
+									self.readerButton.addClass("T1");
+								}, function() {
+									self.readerButton.removeClass("T1");
+								}
+							);
+							menu.append(self.readerButton);*/
+						self.renderButton();
+						self.updateCount();
+						return;
+					}
 				}
 			}
 		}
